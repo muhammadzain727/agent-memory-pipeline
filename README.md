@@ -37,8 +37,7 @@ decisions, design choices, and written content were reviewed and verified by
 the team.
 
 Conversation links:
-- Claude: exported session available at [`docs/llm_disclosure.md`](docs/llm_disclosure.md)
-- ChatGPT: [Conversation link](https://chatgpt.com) ← replace with your actual share link before submission
+- ChatGPT: [Conversation link](https://chatgpt.com/share/6ac7e607-7bf0-83ed-8cde-8acce7a61589)
 
 ## Datasets
 
@@ -72,7 +71,7 @@ after extraction and generation.
 The synthetic generation plan is informed by Maharana et al. (ACL 2024), which
 grounds generated conversations in events and uses human verification. We
 adapt that principle to Jira histories; we do not claim to reproduce LoCoMo.
-See [`docs/source_and_generation_notes.md`](docs/source_and_generation_notes.md).
+
 
 ## KPIs and Analytical Questions
 
