@@ -191,23 +191,7 @@ Query 4 independently aggregates the two fact tables before combining counts.
 It includes historical events as well as interactions and groups all project
 versions by stable identity. Joining raw facts directly would multiply counts.
 
-## Team and AI disclosure
 
-| Member | Proposed responsibility | Actual contribution |
-|---|---|---|
-| [ADD NAME 1] | Data engineering | [ADD %] |
-| [ADD NAME 2] | Memory and retrieval | [ADD %] |
-| [ADD NAME 3] | AI agent and evaluation | [ADD %] |
-
-Replace placeholders with agreed percentages totaling 100%.
-
-Generative AI assisted with project planning, language refinement, document
-preparation, README drafting and supporting SQL examples. The team must review
-and understand submitted material.
-
-AI conversation link(s): **[ADD SHARED LINKS TO EVERY AI CHAT USED]**.
-
-## References
 
 1. Montgomery, L., Lüders, C., and Maalej, W. (2022). *An Alternative Issue Tracking Dataset of Public Jira Repositories*. MSR 2022. Dataset v7: https://zenodo.org/records/15719919. DOI: 10.5281/zenodo.15719919.
 2. Maharana et al. (2024). *Evaluating Very Long-Term Conversational Memory of LLM Agents*. ACL 2024. https://aclanthology.org/2024.acl-long.747/. DOI: 10.18653/v1/2024.acl-long.747.
