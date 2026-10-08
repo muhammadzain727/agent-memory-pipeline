@@ -171,48 +171,6 @@ Quality checks applied:
 - Token counts and latency values must be non-negative
 - Selected-context tokens must not exceed full-history tokens
 
-## Repository Files
-
-| File | Description |
-|---|---|
-| `README.md` | Project overview and reproducibility notes |
-| `Report.pdf` | Final three-page submission document |
-| `sql/01_schema.sql` | DDL defining tables, keys, relationships and constraints |
-| `sql/02_sample_data.sql` | DML inserting clearly fabricated demonstration rows |
-| `sql/03_demo_queries.sql` | Five queries answering the five business questions |
-| `sql/04_quality_checks.sql` | Additional consistency and constraint checks |
-| `docs/data_dictionary.md` | Types and meanings of all 46 warehouse columns |
-| `docs/source_and_generation_notes.md` | Source status and research grounding for synthetic dataset |
-| `docs/llm_disclosure.md` | Exported AI conversation excerpts used during this project |
-| `docs/architecture.png` | Architecture diagram (PNG for report) |
-| `docs/star_schema.png` | Star schema diagram (PNG for report) |
-| `docs/architecture.svg` | Architecture diagram (editable SVG) |
-| `docs/star_schema.svg` | Star schema diagram (editable SVG) |
-| `tools/validate_examples.py` | Optional synthetic SQL checks using Python standard library |
-
-## Running the SQL Examples
-
-For an empty local PostgreSQL test database:
-
-```bash
-psql -d agent_memory_demo -f sql/01_schema.sql
-psql -d agent_memory_demo -f sql/02_sample_data.sql
-psql -d agent_memory_demo -f sql/03_demo_queries.sql
-psql -d agent_memory_demo -f sql/04_quality_checks.sql
-```
-
-These are illustrative model files, not a deployed pipeline. Optional local
-arithmetic checks can be run with:
-
-```bash
-python tools/validate_examples.py
-```
-
-These use SQLite and adapt its date-cast syntax, not a PostgreSQL deployment.
-
-Query 4 independently aggregates the two fact tables before combining counts.
-It includes historical events as well as interactions and groups all project
-versions by stable identity. Joining raw facts directly would multiply counts.
 
 ## References
 
