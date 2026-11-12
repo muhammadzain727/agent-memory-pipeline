@@ -1,0 +1,149 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+*.egg
+.venv/
+venv/
+env/
+ENV/
+.conda/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ---------- Secrets / credentials ----------
+.env
+.env.*
+.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials.json
+service-account*.json
+gcp-key*.json
+.aws/
+.azure/
+.snowflake/
+profiles.yml
+!profiles.yml.example
+
+# ---------- Data files ----------
+data/
+datasets/
+raw/
+processed/
+output/
+outputs/
+tmp/
+temp/
+*.csv
+*.tsv
+*.json.gz
+*.jsonl
+*.ndjson
+*.parquet
+*.avro
+*.orc
+*.feather
+*.arrow
+*.xlsx
+*.xls
+*.sqlite
+*.sqlite3
+*.db
+*.duckdb
+*.duckdb.wal
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.gz
+*.zip
+*.tar
+*.7z
+
+# Keep small sample / fixture data if needed
+!tests/fixtures/**
+!sample_data/**
+
+# ---------- Airflow ----------
+airflow.cfg
+airflow.db
+airflow-webserver.pid
+standalone_admin_password.txt
+webserver_config.py
+logs/
+dags/__pycache__/
+unittests.cfg
+
+# ---------- dbt ----------
+target/
+dbt_packages/
+dbt_modules/
+logs/
+.user.yml
+
+# ---------- Spark / Hadoop ----------
+spark-warehouse/
+metastore_db/
+derby.log
+*.crc
+_SUCCESS
+checkpoint/
+checkpoints/
+
+# ---------- Terraform / IaC ----------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+.terraformrc
+terraform.rc
+
+# ---------- Docker ----------
+docker-compose.override.yml
+.docker/
+
+# ---------- Orchestrators / ML tracking ----------
+.dagster/
+dagster_home/
+.prefect/
+mlruns/
+wandb/
+.dvc/cache
+.dvc/tmp
+.dvc/config.local
+
+# ---------- Notebooks ----------
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# ---------- Logs ----------
+*.log
+
+# ---------- IDEs / editors ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---------- OS files ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+DataSet/
