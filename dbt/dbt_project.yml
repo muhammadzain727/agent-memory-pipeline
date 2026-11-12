@@ -9,6 +9,7 @@ model-paths:
   - models
 
 target-path: target
+
 clean-targets:
   - target
   - dbt_packages
@@ -17,7 +18,12 @@ models:
   agent_memory_dbt:
     staging:
       +materialized: view
+      +schema: staging
+
     silver:
       +materialized: table
+      +schema: silver
+
     gold:
       +materialized: table
+      +schema: gold
