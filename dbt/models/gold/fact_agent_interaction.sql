@@ -1,12 +1,4 @@
-
-{{ config(
-    materialized='table',
-    post_hook=[
-        "ALTER TABLE {{ this }} ADD CONSTRAINT fk_fact_date FOREIGN KEY (date_key) REFERENCES gold.dim_date(date_key)",
-        "ALTER TABLE {{ this }} ADD CONSTRAINT fk_fact_project FOREIGN KEY (project_key) REFERENCES gold.dim_project(project_key)",
-        "ALTER TABLE {{ this }} ADD CONSTRAINT fk_fact_memory_strategy FOREIGN KEY (memory_strategy_key) REFERENCES gold.dim_memory_strategy(memory_strategy_key)"
-    ]
-) }}
+{{ config(materialized='table') }}
 
 SELECT
     a.interaction_id,

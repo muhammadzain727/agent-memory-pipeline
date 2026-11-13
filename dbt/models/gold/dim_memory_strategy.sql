@@ -1,10 +1,5 @@
 
-{{ config(
-    materialized='table',
-    post_hook=[
-        "ALTER TABLE {{ this }} ADD CONSTRAINT pk_dim_memory_strategy PRIMARY KEY (memory_strategy_key)"
-    ]
-) }}
+{{ config(materialized='table') }}
 
 SELECT DISTINCT
     memory_strategy AS memory_strategy_key,

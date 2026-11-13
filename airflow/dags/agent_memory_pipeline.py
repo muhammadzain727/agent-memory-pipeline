@@ -84,6 +84,15 @@ with DAG(
         )
     )
 
+    create_gold_relationships = BashOperator(
+        task_id="create_gold_relationships",
+        bash_command=(
+            "/opt/dbt-venv/bin/dbt run-operation create_gold_constraints "
+            "--project-dir /opt/airflow/dbt "
+            "--profiles-dir /opt/airflow/dbt"
+        )
+    )
+
     dbt_test = BashOperator(
         task_id="dbt_data_quality_tests",
         bash_command=(
@@ -97,4 +106,4 @@ with DAG(
 
     [load_agent_bronze, load_jira_bronze] >> dbt_run
 
-    dbt_run >> dbt_test
+    dbt_run >> create_gold_relationships >> dbt_test

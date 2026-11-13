@@ -1,10 +1,4 @@
-
-{{ config(
-    materialized='table',
-    post_hook=[
-        "ALTER TABLE {{ this }} ADD CONSTRAINT pk_dim_project PRIMARY KEY (project_key)"
-    ]
-) }}
+{{ config(materialized='table') }}
 
 SELECT DISTINCT
     project_id AS project_key,

@@ -1,10 +1,5 @@
 
-{{ config(
-    materialized='table',
-    post_hook=[
-        "ALTER TABLE {{ this }} ADD CONSTRAINT pk_dim_date PRIMARY KEY (date_key)"
-    ]
-) }}
+{{ config(materialized='table') }}
 
 SELECT DISTINCT
     CAST(interaction_time AS DATE) AS date_key,
