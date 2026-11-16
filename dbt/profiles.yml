@@ -1,0 +1,15 @@
+
+agent_memory_profile:
+  target: dev
+
+  outputs:
+    dev:
+      type: postgres
+      host: postgres
+      user: admin
+      password: local_dev_password
+      port: 5432
+      dbname: agent_memory
+      schema: public
+      threads: 4
+      keepalives_idle: 0

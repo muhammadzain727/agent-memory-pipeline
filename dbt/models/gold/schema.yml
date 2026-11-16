@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Date dimension for Agent interactions."
+    columns:
+      - name: date_key
+        description: "Calendar date of the interaction."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_project
+    description: "Dimension containing Agent project information."
+    columns:
+      - name: project_key
+        description: "Unique project identifier."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_memory_strategy
+    description: "Dimension containing the memory strategies."
+    columns:
+      - name: memory_strategy_key
+        description: "Unique memory strategy identifier."
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_agent_interaction
+    description: "Fact table containing Agent interaction measurements."
+    columns:
+      - name: interaction_id
+        description: "Unique Agent interaction identifier."
+        tests:
+          - unique
+          - not_null
+
+      - name: date_key
+        tests:
+          - not_null
+
+      - name: project_key
+        tests:
+          - not_null
+
+      - name: memory_strategy_key
+        tests:
+          - not_null
