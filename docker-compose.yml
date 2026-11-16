@@ -12,6 +12,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
@@ -41,7 +42,6 @@ services:
       - ./dbt:/opt/airflow/dbt
       - ./data:/opt/airflow/data
       - ./scripts:/opt/airflow/scripts
-      - ./db/init:/docker-entrypoint-initdb.d:ro
     command: standalone
 
 volumes:
