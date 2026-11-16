@@ -41,6 +41,9 @@ services:
       - ./dbt:/opt/airflow/dbt
       - ./data:/opt/airflow/data
       - ./scripts:/opt/airflow/scripts
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - postgres_data:/var/lib/postgresql/data
+      
     command: standalone
 
 volumes:
