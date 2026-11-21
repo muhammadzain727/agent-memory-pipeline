@@ -20,7 +20,7 @@ SELECT
 
     loaded_at AS ingested_at
 
-FROM bronze.agent_interactions_raw
+FROM {{ source('bronze', 'agent_interactions_raw') }}
 
 WHERE interaction_id IS NOT NULL
   AND memory_strategy IS NOT NULL

@@ -18,6 +18,6 @@ SELECT
 
     ingested_at
 
-FROM bronze.jira_issues_raw
+FROM {{ source('bronze', 'jira_issues_raw') }}
 
 WHERE issue_id IS NOT NULL

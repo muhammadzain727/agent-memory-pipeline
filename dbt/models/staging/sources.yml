@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Raw data loaded by the Airflow ingestion tasks."
+    schema: bronze
+    tables:
+      - name: agent_interactions_raw
+        description: "Synthetic Agent interactions, one row per interaction."
+        columns:
+          - name: interaction_id
+            description: "Unique interaction identifier (upsert key)."
+            tests:
+              - unique
+              - not_null
+          - name: file_version
+            description: "Version of the source file that last loaded the row."
+
+      - name: jira_issues_raw
+        description: "Public Jira issues, one row per issue."
+        columns:
+          - name: issue_id
+            description: "Jira issue identifier (upsert key)."
+            tests:
+              - unique
+              - not_null
+          - name: raw_payload
+            description: "The complete Jira record as JSON."

@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_agent_interactions
+    description: "View over bronze Agent interactions. Drops rows without an id or a strategy."
+    columns:
+      - name: interaction_id
+        description: "Unique interaction identifier."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_jira_issues
+    description: "View over bronze Jira issues. Extracts project, type, status and priority from the JSON."
+    columns:
+      - name: issue_id
+        description: "Jira issue identifier."
+        tests:
+          - unique
+          - not_null

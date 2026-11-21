@@ -134,10 +134,10 @@ Apache Airflow controls the complete pipeline using seven tasks.
 
 | Task | Responsibility |
 |---|---|
-| `generate_test_data` | Generates synthetic Agent interaction data |
-| `validate_test_data` | Checks generated data |
-| `load_agent_bronze_data` | Loads Agent records into Bronze |
-| `load_jira_bronze_data` | Loads Jira records into Bronze |
+| `generate_agent_data` | Generates the synthetic Agent interactions (fixed seed 42) into a versioned file |
+| `validate_agent_data` | Rejects the file when a field is missing, an ID is duplicated, a value is negative or the selected context is larger than the full history |
+| `load_agent_bronze_data` | Upserts Agent records into Bronze and writes a row to `audit.pipeline_runs` |
+| `load_jira_bronze_data` | Upserts Jira records into Bronze and writes a row to `audit.pipeline_runs` |
 | `dbt_transformations` | Builds all dbt models |
 | `create_gold_relationships` | Creates Gold primary and foreign keys |
 | `dbt_data_quality_tests` | Executes dbt quality tests |
@@ -146,7 +146,7 @@ Both ingestion branches must finish before dbt transformations begin.
 
 After the Gold models are built, the relationship task creates the database constraints. Finally, dbt executes its data quality tests.
 
-The pipeline supports execution date and file version parameters.
+The pipeline supports execution date and file version parameters. The Agent source file name contains the version (`agent_conversations_v1.json`), and the version is stored in the `file_version` column of both bronze tables. Every load is an upsert on the business key, so running the pipeline again for the same file creates no duplicates; the audit table records how many rows were inserted and how many were updated.
 
 ## 7. dbt Transformation Design
 
@@ -165,7 +165,7 @@ The Gold relationship creation is handled by a dbt macro called `create_gold_con
 
 Airflow invokes this macro after dbt transformations. It checks whether the constraints already exist before creating them, making the operation safe to retry.
 
-The project contains 11 dbt tests covering unique and not null requirements.
+The project contains 34 dbt tests: unique and not null checks on every key, accepted values for the memory strategy, relationship tests from the fact table to each dimension, tests on the bronze sources, and three business rule tests in `dbt/tests` (selected context never above full history, input tokens never below selected context, no context reduction for complete history).
 
 ## 8. Database Design and Technology Selection
 
@@ -199,12 +199,12 @@ The fresh environment verification produced the following results:
 | Component | Verified result |
 |---|---:|
 | Jira Bronze | 10,000 records |
-| Agent Bronze | 5,040 records |
+| Agent Bronze | 5,000 records |
 | Jira Silver | 10,000 records |
 | Agent Silver | 5,000 records |
 | Gold fact table | 5,000 records |
 | dbt models | 8 successful |
-| dbt tests | 11 passed |
+| dbt tests | 34 passed |
 | Gold constraints | 3 primary keys and 3 foreign keys |
 | Airflow tasks | 7 successful |
 

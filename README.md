@@ -59,15 +59,15 @@ Primary and foreign key constraints maintain relationships between the fact tabl
 
 Airflow orchestrates the complete pipeline through seven tasks:
 
-1. Generate synthetic Agent data.
-2. Validate generated data.
-3. Load Agent data into Bronze.
-4. Load Jira data into Bronze.
-5. Execute dbt transformations.
-6. Create Gold primary and foreign key relationships.
-7. Execute dbt data quality tests.
+1. `generate_agent_data`: generate the synthetic Agent interactions (fixed seed 42).
+2. `validate_agent_data`: reject the file if any quality rule is broken.
+3. `load_agent_bronze_data`: upsert the Agent data into Bronze.
+4. `load_jira_bronze_data`: upsert the Jira data into Bronze.
+5. `dbt_transformations`: build staging, Silver and Gold.
+6. `create_gold_relationships`: add Gold primary and foreign keys.
+7. `dbt_data_quality_tests`: run the dbt tests.
 
-The pipeline supports date and file version parameters. Jira ingestion uses upsert logic to avoid duplicate issue records.
+The DAG has a `file_version` parameter (default `v1`). The Agent source file name contains the version (`agent_conversations_v1.json`) and the version is stored in both Bronze tables. Both loads are upserts on the business key, so re-running the pipeline creates no duplicates, and each load writes a row with the inserted and updated counts to `audit.pipeline_runs`.
 
 ## 6. dbt Transformations
 
@@ -80,7 +80,7 @@ The project contains eight dbt models:
 
 The Gold relationships are created through a dbt macro executed by Airflow after the transformations.
 
-The project includes 11 dbt data quality tests covering uniqueness and non null requirements.
+The project includes 34 dbt tests: uniqueness and not null checks, accepted values, fact to dimension relationships, tests on the Bronze sources and three business rule tests in `dbt/tests`.
 
 ## 7. Analytical Questions
 
@@ -99,10 +99,10 @@ The synthetic experiment produced the following results:
 | Memory strategy | Context reduction | Average input tokens | Retrieval latency |
 |---|---:|---:|---:|
 | Retrieval with Compression | 83.80% | 1,206.49 | 108.54 ms |
-| Recent Context with Retrieval | 58.90% | 2,597.08 | 60.35 ms |
+| Recent Context with Retrieval | 60.02% | 2,571.66 | 60.35 ms |
 | Complete History | 0.00% | 7,289.87 | 0.00 ms |
 
-These results demonstrate the tradeoff between context reduction, token consumption and retrieval latency within the synthetic experiment.
+These results demonstrate the tradeoff between context reduction, token consumption and retrieval latency within the synthetic experiment. All token counts and latencies are generated from fixed random ranges (see `docs/synthetic_data.md`), so the results show that the pipeline works, not how a real agent performs.
 
 ## 9. Running the Project
 
@@ -129,7 +129,11 @@ cp .env.example .env
 
 Configure the required environment variables in `.env`.
 
-Ensure the Jira dataset and extracted JSONL file are available at the paths expected by the ingestion script. Large source datasets are not included in the Git repository.
+Set `POSTGRES_DB`, `POSTGRES_USER` and `POSTGRES_PASSWORD` in `.env`. The same values are used by PostgreSQL, the ingestion scripts and dbt.
+
+Place the Jira JSONL file at `data/jira/extracted/apache_issues_10000.jsonl`. It is about 550 MB, so it is not included in the Git repository.
+
+The first start creates the `bronze` and `audit` schemas from `db/init/01_init.sql` (PostgreSQL runs it only when the data volume is new; use `docker compose down -v` to start from scratch).
 
 Build and start the containers:
 

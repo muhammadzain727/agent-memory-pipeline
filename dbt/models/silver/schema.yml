@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: silver_agent_interactions
+    description: "Cleaned Agent interactions: no negative token counts or latencies."
+    columns:
+      - name: interaction_id
+        description: "Unique interaction identifier."
+        tests:
+          - unique
+          - not_null
+      - name: memory_strategy
+        description: "Memory strategy used for the interaction."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - complete_history
+                - recent_context_retrieval
+                - retrieval_compression
+      - name: interaction_time
+        tests:
+          - not_null
+
+  - name: silver_jira_issues
+    description: "Cleaned Jira issues that have an id, a key and a project."
+    columns:
+      - name: issue_id
+        description: "Jira issue identifier."
+        tests:
+          - unique
+          - not_null
+      - name: issue_key
+        tests:
+          - not_null
+      - name: project_key
+        tests:
+          - not_null

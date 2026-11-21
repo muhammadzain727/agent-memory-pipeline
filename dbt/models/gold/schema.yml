@@ -40,11 +40,20 @@ models:
       - name: date_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
 
       - name: project_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_project')
+              field: project_key
 
       - name: memory_strategy_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_memory_strategy')
+              field: memory_strategy_key
